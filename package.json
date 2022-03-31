@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/kartikpapney/password-manager-backend#readme",
   "dependencies": {
-    "express": "^4.17.3"
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.9"
   }
 }
