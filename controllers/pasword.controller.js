@@ -1,5 +1,5 @@
 const insertPassword = async(req, res) => {
-
+    
 }
 const deletePassword = async(req, res) => {
     

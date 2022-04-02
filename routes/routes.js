@@ -1,5 +1,5 @@
 const express = require('express')
-const router = express.Router()
+const routes = express.Router()
 
 const {
     insertPassword,
@@ -10,15 +10,13 @@ const {
 } = require('../controllers/pasword.controller.js');
 
 const {
-    setMasterKey
+    signIn,
+    verify
 } = require('../controllers/user.controller.js');
 
-// const {
-//     signin,
-//     verfiy
-// } = require('../conrollers/auth')
+routes
+.route('/signin').post(signIn);
+routes
+.route('/signin/verify').post(verify)
 
-// router.route('/').get(getAllTasks).post(createTask)
-// router.route('/:id').get(getTask).patch(updateTask).delete(deleteTask)
-
-module.exports = router
+module.exports = routes

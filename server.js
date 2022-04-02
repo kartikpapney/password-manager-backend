@@ -2,13 +2,13 @@ const express = require('express');
 const generateMasterPassword = require('./controllers/fn.js');
 const app = express();
 const connectDB = require('./db/connect');
-const router = require('./routes/routes.js');
+const routes = require('./routes/routes.js');
 require('dotenv').config();
 
 app.use(express.json());
 
 const port = process.env.PORT || 5000;
-app.use(router);
+app.use('/', routes);
 const start = async () => {
     try {
         await connectDB(process.env.MONGO_URI);

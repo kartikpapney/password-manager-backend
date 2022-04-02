@@ -1,0 +1,17 @@
+POST http://localhost:5000/signin HTTP/1.1
+content-type: application/json
+
+{
+    "number": "8295654594",
+    "password": "abc"
+}
+
+###
+
+POST http://localhost:5000/signin/verify HTTP/1.1
+content-type: application/json
+
+{
+    "number": "8295654594",
+    "otp": "612780"
+}
