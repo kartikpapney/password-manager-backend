@@ -1,3 +1,4 @@
+const { reject } = require('lodash');
 const mongoose = require('mongoose')
 
 const connectDB = (url) => {
@@ -6,7 +7,6 @@ const connectDB = (url) => {
         // useCreateIndex: true,
         // useFindAndModify: false,
         // useUnifiedTopology: true,
-    })
+        });
 }
-
 module.exports = connectDB

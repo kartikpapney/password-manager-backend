@@ -1,4 +1,5 @@
 const insertPassword = async(req, res) => {
+    const number = req.body.number;
     
 }
 const deletePassword = async(req, res) => {

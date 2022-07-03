@@ -1,9 +1,7 @@
 POST http://localhost:5000/signin HTTP/1.1
 content-type: application/json
-
 {
-    "number": "8295654594",
-    "password": "abc"
+    "number": "8295654594"
 }
 
 ###
@@ -13,5 +11,14 @@ content-type: application/json
 
 {
     "number": "8295654594",
-    "otp": "612780"
+    "otp": "757512"
+}
+
+###
+
+POST http://localhost:5000/ HTTP/1.1
+content-type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1iZXIiOiI4Mjk1NjU0NTk0IiwiaWF0IjoxNjQ4ODk5MTU3LCJleHAiOjE2NDg4OTk0NTd9.lX4nAm71J35g7-VpIZW0CHJcZmkHyod55g7WxI85uCw"
 }

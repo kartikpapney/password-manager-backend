@@ -2,27 +2,33 @@ const bcrypt = require("bcrypt");
 const _ = require("lodash");
 const axios = require("axios");
 const otpGenerator = require('otp-generator');
-
+const Redis = require('redis');
 const { Account } = require('../models/AccountSchema');
 const { Otp } = require('../models/OtpSchema');
-const {User} = require('../models/UserSchema')
+const {User} = require('../models/UserSchema');
+
+const {redisClient} = require('../db/redis.js');
+
+const DEFAULT_EXPIRATION = 300;
+
+const generateOTP = async() => {
+    return new Promise((resolve, reject) => {
+        const OTP = otpGenerator.generate(6, {
+            digits: true,
+            lowerCaseAlphabets: false,
+            upperCaseAlphabets: false,
+            specialChars: false
+        });
+        resolve(OTP);
+    })
+}
 
 const signIn = async (req, res) => {
-    const number = req.body.number;
-
-    const OTP = otpGenerator.generate(6, {
-        digits: true,
-        lowerCaseAlphabets: false,
-        upperCaseAlphabets: false,
-        specialChars: false
-    });
-
+    const {number} = req.body;
+    const OTP = await generateOTP();
+    const client = await redisClient();
+    client.setEx(number, DEFAULT_EXPIRATION, OTP);
     console.log(OTP);
-
-    const salt = await bcrypt.genSalt(10);
-    const otphash = await bcrypt.hash(OTP, salt);
-    const otp = new Otp({ number: number, otp: otphash });
-    const result = await otp.save();
     return res.status(200).send("Otp send successfully!");
 }
 
@@ -35,9 +41,9 @@ const verify = async (req, res) => {
     const validUser = await bcrypt.compare(req.body.otp, otp.otp);
 
     if (validUser) {
-        const user = new User(_.pick(req.body, ["number"]));
-        const token = user.generateJWT();
+        const user = new User({number: otp.number, name: otp.name, password: otp.password}, { upsert: true });
         const result = await user.save();
+        const token = user.generateJWT();
         const OTPDelete = await Otp.deleteMany({
             number: otp.number
         });

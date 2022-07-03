@@ -3,8 +3,18 @@ const {Schema, model} = require('mongoose');
 module.exports.Otp = model('Otp', Schema({
     number: {
         type: String,
-        required: true
+        required: true,
+        index: true,
+        unique: true
     }, 
+    name: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
     otp: {
         type: String,
         required: true
