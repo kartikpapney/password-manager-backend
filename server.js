@@ -1,5 +1,4 @@
 const express = require('express');
-const generateMasterPassword = require('./controllers/fn.js');
 const bodyParser = require("body-parser");
 const app = express();
 const connectDB = require('./db/connect');
@@ -14,8 +13,10 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 
 const port = process.env.PORT || 5000;
+
 app.use('/', routes);
-const start = async () => {
+
+(async() => {
     try {
         await connect();
         await connectDB(process.env.MONGO_URI);
@@ -25,6 +26,4 @@ const start = async () => {
     } catch(err) {
         console.log(err);
     }
-};
-
-start();
+})();
